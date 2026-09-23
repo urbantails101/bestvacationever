@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Best Vacation</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --navy: #07182f;
+  --navy-light: #0d2342;
+  --gold: #d4af37;
+  --gold-light: #e6ca68;
+  --white: #ffffff;
+  --muted: #b9c3d1;
+  --border: rgba(212,175,55,.35);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "DM Sans", sans-serif;
+  background: var(--navy);
+  color: var(--white);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, .logo, .destination-name {
+  font-family: "Playfair Display", Georgia, serif;
+}
+
+/* HERO */
+
+.hero {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background:
+    linear-gradient(rgba(7,24,47,.48), rgba(7,24,47,.78)),
+    url("https://images.unsplash.com/photo-1522083165195-3424ed129620?auto=format&fit=crop&w=2400&q=85")
+    center/cover no-repeat;
+}
+
+.hero-content {
+  max-width: 900px;
+  padding: 40px 24px;
+  animation: fadeUp 1s ease;
+}
+
+.logo {
+  font-size: 27px;
+  letter-spacing: .5px;
+  margin-bottom: 75px;
+}
+
+.logo span {
+  display: block;
+  color: var(--gold);
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.hero h1 {
+  font-size: clamp(48px, 8vw, 86px);
+  line-height: 1.02;
+  font-weight: 600;
+  margin-bottom: 25px;
+}
+
+.hero p {
+  font-size: 20px;
+  color: #edf1f7;
+  margin-bottom: 42px;
+}
+
+.cta {
+  border: none;
+  background: var(--gold);
+  color: var(--navy);
+  padding: 17px 31px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: .25s ease;
+}
+
+.cta:hover {
+  transform: translateY(-4px);
+  background: var(--gold-light);
+}
+
+/* QUIZ */
+
+.quiz-section {
+  min-height: 100vh;
+  padding: 100px 24px;
+  background: var(--navy);
+}
+
+.quiz-container {
+  max-width: 900px;
+  margin: auto;
+}
+
+.progress-area {
+  margin-bottom: 55px;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 3px;
+  background: rgba(255,255,255,.12);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--gold);
+  transition: width .45s ease;
+}
+
+.question-number {
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 13px;
+  margin-bottom: 17px;
+}
+
+.question {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(32px, 5vw, 55px);
+  line-height: 1.12;
+  margin-bottom: 42px;
+}
+
+.answers {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 17px;
+}
+
+.answer {
+  background: var(--navy-light);
+  border: 1px solid var(--border);
+  padding: 25px;
+  min-height: 85px;
+  text-align: left;
+  color: white;
+  cursor: pointer;
+  transition: .25s ease;
+  font-size: 16px;
+  border-radius: 4px;
+}
+
+.answer:hover {
+  transform: translateY(-3px);
+  border-color: var(--gold);
+}
+
+.answer.selected {
+  background: var(--gold);
+  color: var(--navy);
+  border-color: var(--gold);
+  font-weight: 700;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 35px;
+  gap: 15px;
+}
+
+.nav-btn {
+  border: none;
+  background: var(--gold);
+  color: var(--navy);
+  padding: 14px 27px;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .2s ease;
+}
+
+.nav-btn:hover:not(:disabled) {
+  transform: translateY(-3px);
+}
+
+.nav-btn:disabled {
+  opacity: .3;
+  cursor: not-allowed;
+}
+
+/* RESULTS */
+
+.results {
+  display: none;
+  min-height: 100vh;
+  padding: 90px 24px;
+  background: var(--navy);
+}
+
+.results-container {
+  max-width: 1100px;
+  margin: auto;
+}
+
+.result-intro {
+  text-align: center;
+  margin-bottom: 45px;
+}
+
+.result-intro p {
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+.result-intro h2 {
+  font-size: clamp(40px, 6vw, 65px);
+}
+
+.winner {
+  position: relative;
+  height: 560px;
+  overflow: hidden;
+  margin-bottom: 60px;
+}
+
+.winner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.winner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    transparent 20%,
+    rgba(7,24,47,.2) 45%,
+    rgba(7,24,47,.92) 100%
+  );
+}
+
+.winner-info {
+  position: absolute;
+  z-index: 2;
+  bottom: 45px;
+  left: 45px;
+  right: 45px;
+  text-align: center;
+}
+
+.destination-name {
+  font-size: clamp(50px, 8vw, 90px);
+  margin-bottom: 13px;
+}
+
+.winner-description {
+  max-width: 650px;
+  margin: auto;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.runners-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 32px;
+  margin-bottom: 25px;
+}
+
+.runner-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.runner {
+  background: var(--navy-light);
+}
+
+.runner img {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+  display: block;
+}
+
+.runner h3 {
+  padding: 20px;
+  font-size: 25px;
+}
+
+.restart {
+  display: block;
+  margin: 50px auto 0;
+}
+
+/* ANIMATION */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade {
+  animation: fadeUp .45s ease;
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+  .answers {
+    grid-template-columns: 1fr;
+  }
+
+  .hero h1 {
+    font-size: 50px;
+  }
+
+  .winner {
+    height: 470px;
+  }
+
+  .winner-info {
+    left: 20px;
+    right: 20px;
+    bottom: 30px;
+  }
+
+  .runner-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .navigation {
+    flex-direction: column-reverse;
+  }
+
+  .nav-btn {
+    width: 100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+
+<section class="hero">
+  <div class="hero-content">
+
+    <div class="logo">
+      Best Vacation
+      <span>✈</span>
+    </div>
+
+    <h1>Your Next Vacation Starts Here.</h1>
+
+    <p>Let’s find the trip that’s right for you.</p>
+
+    <button class="cta" onclick="startQuiz()">
+      Find My Vacation →
+    </button>
+
+  </div>
+</section>
+
+
+<!-- QUIZ -->
+
+<section class="quiz-section" id="quiz">
+
+  <div class="quiz-container">
+
+    <div class="progress-area">
+
+      <div class="progress-label">
+        <span id="progressText">Question 1 of 18</span>
+        <span id="progressPercent">6%</span>
+      </div>
+
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+
+    </div>
+
+    <div id="questionNumber" class="question-number">
+      Question 1
+    </div>
+
+    <h2 id="question" class="question"></h2>
+
+    <div id="answers" class="answers"></div>
+
+    <div class="navigation">
+
+      <button
+        id="backBtn"
+        class="nav-btn"
+        onclick="previousQuestion()"
+        disabled>
+        ← Back
+      </button>
+
+      <button
+        id="nextBtn"
+        class="nav-btn"
+        onclick="nextQuestion()"
+        disabled>
+        Next →
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- RESULTS -->
+
+<section class="results" id="results">
+
+  <div class="results-container">
+
+    <div class="result-intro">
+      <p>Your Best Vacation Match</p>
+      <h2>We found your destination.</h2>
+    </div>
+
+    <div class="winner">
+
+      <img id="winnerImage" src="" alt="">
+
+      <div class="winner-info">
+
+        <div id="winnerName" class="destination-name"></div>
+
+        <div id="winnerDescription" class="winner-description"></div>
+
+      </div>
+
+    </div>
+
+    <h3 class="runners-title">You might also love...</h3>
+
+    <div id="runnerGrid" class="runner-grid"></div>
+
+    <button class="cta restart" onclick="restartQuiz()">
+      Take the Quiz Again
+    </button>
+
+  </div>
+
+</section>
+
+
+<script>
+
+/* =========================================
+   DESTINATIONS
+========================================= */
+
+const destinations = [
+
+  {
+    name: "San Francisco",
+    image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=1600&q=85",
+    description: "A dramatic city of waterfront views, neighborhoods, food, and iconic West Coast energy.",
+    tags: ["city","food","nature","culture","moderate"]
+  },
+
+  {
+    name: "Vancouver",
+    image: "https://images.unsplash.com/photo-1559511260-66a654ae982a?auto=format&fit=crop&w=1600&q=85",
+    description: "A polished Canadian city where mountains, ocean, food, and urban life meet.",
+    tags: ["nature","city","food","relaxed","moderate"]
+  },
+
+  {
+    name: "Los Angeles",
+    image: "https://images.unsplash.com/photo-1534190760961-74e8c1c5c3da?auto=format&fit=crop&w=1600&q=85",
+    description: "Big-city California with beaches, entertainment, neighborhoods, and endless things to explore.",
+    tags: ["city","beach","food","nightlife","moderate"]
+  },
+
+  {
+    name: "Dallas",
+    image: "https://images.unsplash.com/photo-1502736849225-9f7bbf5e5b84?auto=format&fit=crop&w=1600&q=85",
+    description: "A modern Texas destination with great food, shopping, sports, and a huge-city feel.",
+    tags: ["city","food","shopping","moderate","family"]
+  },
+
+  {
+    name: "Houston",
+    image: "https://images.unsplash.com/photo-1531218150217-54595bc2b934?auto=format&fit=crop&w=1600&q=85",
+    description: "A diverse, food-loving Texas city packed with museums, neighborhoods, and space-age history.",
+    tags: ["food","culture","city","family","moderate"]
+  },
+
+  {
+    name: "Toronto",
+    image: "https://images.unsplash.com/photo-1517090504586-fde19ea6066f?auto=format&fit=crop&w=1600&q=85",
+    description: "A multicultural Canadian metropolis with food, neighborhoods, sports, and waterfront views.",
+    tags: ["city","food","culture","family","moderate"]
+  },
+
+  {
+    name: "Chicago",
+    image: "https://images.unsplash.com/photo-1494522855154-9297ac14b55f?auto=format&fit=crop&w=1600&q=85",
+    description: "Architecture, deep-dish pizza, museums, lakefront views, and classic American city energy.",
+    tags: ["city","food","culture","architecture","moderate"]
+  },
+
+  {
+    name: "New York City",
+    image: "https://images.unsplash.com/photo-1496588152823-86ff7695e68f?auto=format&fit=crop&w=1600&q=85",
+    description: "The city that never sleeps, filled with culture, food, Broadway, neighborhoods, and nonstop energy.",
+    tags: ["city","food","culture","nightlife","expensive"]
+  },
+
+  {
+    name: "Miami",
+    image: "https://images.unsplash.com/photo-1535498730771-e735b998cd64?auto=format&fit=crop&w=1600&q=85",
+    description: "Sun, beaches, tropical energy, incredible food, and a distinctly international atmosphere.",
+    tags: ["beach","warm","nightlife","food","expensive"]
+  },
+
+  {
+    name: "Rio de Janeiro",
+    image: "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?auto=format&fit=crop&w=1600&q=85",
+    description: "Mountains, beaches, music, Brazilian culture, and one of the world's most dramatic city settings.",
+    tags: ["beach","warm","adventure","culture","moderate"]
+  },
+
+  {
+    name: "São Paulo",
+    image: "https://images.unsplash.com/photo-1543059080-f9b1272213d5?auto=format&fit=crop&w=1600&q=85",
+    description: "A massive Brazilian metropolis known for food, art, nightlife, and cultural variety.",
+    tags: ["city","food","culture","nightlife","moderate"]
+  },
+
+  {
+    name: "Rome",
+    image: "https://images.unsplash.com/photo-1529260830199-42c24126f198?auto=format&fit=crop&w=1600&q=85",
+    description: "Ancient history, Italian food, famous landmarks, beautiful streets, and unforgettable atmosphere.",
+    tags: ["history","food","culture","romance","moderate"]
+  },
+
+  {
+    name: "Madrid",
+    image: "https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=1600&q=85",
+    description: "Spanish art, food, plazas, nightlife, and a lively European city atmosphere.",
+    tags: ["culture","food","nightlife","history","moderate"]
+  },
+
+  {
+    name: "Amsterdam",
+    image: "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?auto=format&fit=crop&w=1600&q=85",
+    description: "Canals, museums, cycling, beautiful architecture, and an effortlessly cool European atmosphere.",
+    tags: ["culture","city","history","food","moderate"]
+  },
+
+  {
+    name: "London",
+    image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=1600&q=85",
+    description: "Royal history, world-class museums, neighborhoods, food, theater, and endless things to discover.",
+    tags: ["history","culture","city","food","expensive"]
+  },
+
+  {
+    name: "Paris",
+    image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1600&q=85",
+    description: "Art, architecture, cafés, fashion, history, and some of Europe's most iconic sights.",
+    tags: ["culture","food","romance","history","expensive"]
+  },
+
+  {
+    name: "Stockholm",
+    image: "https://images.unsplash.com/photo-1509356843151-3e7d96241e11?auto=format&fit=crop&w=1600&q=85",
+    description: "Elegant Scandinavian design, islands, museums, waterfronts, and calm city energy.",
+    tags: ["culture","nature","city","relaxed","expensive"]
+  },
+
+  {
+    name: "Tokyo",
+    image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1600&q=85",
+    description: "A spectacular combination of futuristic city life, Japanese culture, food, and tradition.",
+    tags: ["city","food","culture","adventure","expensive"]
+  },
+
+  {
+    name: "Seoul",
+    image: "https://images.unsplash.com/photo-1538485399081-7c8977d6e7b7?auto=format&fit=crop&w=1600&q=85",
+    description: "Fast-moving Korean city life mixed with palaces, food, shopping, technology, and tradition.",
+    tags: ["city","food","culture","shopping","moderate"]
+  },
+
+  {
+    name: "Bali",
+    image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1600&q=85",
+    description: "Tropical landscapes, beaches, temples, adventure, and a slower island atmosphere.",
+    tags: ["beach","warm","nature","relaxed","moderate"]
+  },
+
+  {
+    name: "Jakarta",
+    image: "https://images.unsplash.com/photo-1555899434-94d1368aa7af?auto=format&fit=crop&w=1600&q=85",
+    description: "A huge Indonesian metropolis filled with food, shopping, culture, and urban energy.",
+    tags: ["city","food","culture","shopping","moderate"]
+  },
+
+  {
+    name: "Ho Chi Minh City",
+    image: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?auto=format&fit=crop&w=1600&q=85",
+    description: "Energetic streets, incredible food, history, markets, and a fascinating Southeast Asian atmosphere.",
+    tags: ["food","culture","history","adventure","budget"]
+  },
+
+  {
+    name: "Dubai",
+    image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1600&q=85",
+    description: "Ultra-modern architecture, luxury shopping, desert adventures, beaches, and huge experiences.",
+    tags: ["luxury","shopping","warm","city","expensive"]
+  },
+
+  {
+    name: "Maldives",
+    image: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=1600&q=85",
+    description: "Crystal-clear water, tropical islands, peaceful resorts, and an escape built around relaxation.",
+    tags: ["beach","luxury","warm","relaxed","expensive"]
+  },
+
+  {
+    name: "Melbourne",
+    image: "https://images.unsplash.com/photo-1514395462725-fb4566210144?auto=format&fit=crop&w=1600&q=85",
+    description: "Creative Australian city life with cafés, art, neighborhoods, sports, and coastal escapes.",
+    tags: ["city","food","culture","relaxed","expensive"]
+  },
+
+  {
+    name: "Sydney",
+    image: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d8?auto=format&fit=crop&w=1600&q=85",
+    description: "Iconic harbor views, beaches, outdoor adventures, food, and a laid-back global city feel.",
+    tags: ["beach","city","nature","food","expensive"]
+  }
+
+];
+
+
+/* =========================================
+   QUESTIONS
+========================================= */
+
+const questions = [
+
+  {
+    text: "What kind of vacation atmosphere sounds best?",
+    answers: [
+      {text:"Huge, energetic city", tags:["city","nightlife"]},
+      {text:"Historic and beautiful", tags:["history","culture"]},
+      {text:"Tropical and relaxing", tags:["beach","relaxed"]},
+      {text:"Nature and adventure", tags:["nature","adventure"]}
+    ]
+  },
+
+  {
+    text: "How important is food to your trip?",
+    answers: [
+      {text:"It is basically part of the itinerary", tags:["food"]},
+      {text:"Very important", tags:["food"]},
+      {text:"I'll try local food, but it isn't everything", tags:[]},
+      {text:"I'm happy with familiar options", tags:["family"]}
+    ]
+  },
+
+  {
+    text: "Pick your ideal day.",
+    answers: [
+      {text:"Museums → dinner → city lights", tags:["culture","food","nightlife"]},
+      {text:"Beach → swimming → sunset", tags:["beach","warm","relaxed"]},
+      {text:"Landmarks → historic streets → café", tags:["history","culture","food"]},
+      {text:"Hike → explore → something completely new", tags:["nature","adventure"]}
+    ]
+  },
+
+  {
+    text: "How much sightseeing do you want?",
+    answers: [
+      {text:"Give me ALL the landmarks", tags:["culture","history"]},
+      {text:"A good mix", tags:["city","culture"]},
+      {text:"Some sights, mostly relaxing", tags:["relaxed"]},
+      {text:"I care more about experiences than landmarks", tags:["adventure"]}
+    ]
+  },
+
+  {
+    text: "What's your ideal temperature?",
+    answers: [
+      {text:"Hot and tropical", tags:["warm","beach"]},
+      {text:"Warm, but not extremely hot", tags:["warm"]},
+      {text:"Cool and comfortable", tags:["relaxed"]},
+      {text:"Cold weather doesn't bother me", tags:["culture"]}
+    ]
+  },
+
+  {
+    text: "How much nightlife do you want?",
+    answers: [
+      {text:"Give me a city that never sleeps", tags:["nightlife","city"]},
+      {text:"Some fun evenings", tags:["nightlife"]},
+      {text:"Dinner and a relaxed evening", tags:["food","relaxed"]},
+      {text:"I don't really care about nightlife", tags:["relaxed"]}
+    ]
+  },
+
+  {
+    text: "What sounds most exciting?",
+    answers: [
+      {text:"Trying foods I've never had", tags:["food","adventure"]},
+      {text:"Seeing something completely different", tags:["culture","adventure"]},
+      {text:"Relaxing somewhere beautiful", tags:["beach","relaxed"]},
+      {text:"Exploring a giant city", tags:["city","adventure"]}
+    ]
+  },
+
+  {
+    text: "How much history do you want?",
+    answers: [
+      {text:"I want to walk through history", tags:["history"]},
+      {text:"A little history would be cool", tags:["culture"]},
+      {text:"History isn't a priority", tags:[]},
+      {text:"I prefer modern cities", tags:["city"]}
+    ]
+  },
+
+  {
+    text: "What kind of scenery grabs your attention?",
+    answers: [
+      {text:"Skyline and skyscrapers", tags:["city"]},
+      {text:"Mountains and forests", tags:["nature"]},
+      {text:"Ocean and beaches", tags:["beach"]},
+      {text:"Historic buildings and streets", tags:["history","culture"]}
+    ]
+  },
+
+  /* BUDGET #1 */
+
+  {
+    text: "What is your approximate budget per person for the trip?",
+    answers: [
+      {text:"Under $1,000", tags:["budget"]},
+      {text:"$1,000–$2,000", tags:["moderate"]},
+      {text:"$2,000–$4,000", tags:["moderate","expensive"]},
+      {text:"$4,000+", tags:["expensive","luxury"]}
+    ]
+  },
+
+  {
+    text: "Where would you rather spend your money?",
+    answers: [
+      {text:"Great food and experiences", tags:["food","adventure"]},
+      {text:"A beautiful hotel or resort", tags:["luxury","relaxed"]},
+      {text:"Shopping and entertainment", tags:["shopping","city"]},
+      {text:"Seeing as many sights as possible", tags:["culture","history"]}
+    ]
+  },
+
+  {
+    text: "What matters most about your hotel?",
+    answers: [
+      {text:"Location — put me in the middle of everything", tags:["city"]},
+      {text:"Comfort and style", tags:["luxury"]},
+      {text:"Beach or beautiful surroundings", tags:["beach","nature"]},
+      {text:"I mostly need somewhere to sleep", tags:["budget"]}
+    ]
+  },
+
+  {
+    text: "Pick a vacation activity.",
+    answers: [
+      {text:"Shopping until I need another suitcase", tags:["shopping"]},
+      {text:"A museum or historic site", tags:["culture","history"]},
+      {text:"Snorkeling, swimming, or water activities", tags:["beach","adventure"]},
+      {text:"Exploring neighborhoods with no plan", tags:["city","adventure"]}
+    ]
+  },
+
+  {
+    text: "How much adventure do you want?",
+    answers: [
+      {text:"Maximum adventure", tags:["adventure"]},
+      {text:"A few exciting experiences", tags:["adventure"]},
+      {text:"A balanced trip", tags:["city","culture"]},
+      {text:"Mostly peaceful", tags:["relaxed"]}
+    ]
+  },
+
+  {
+    text: "Which travel style sounds most like you?",
+    answers: [
+      {text:"Luxury", tags:["luxury"]},
+      {text:"Culture and discovery", tags:["culture","history"]},
+      {text:"Beach escape", tags:["beach","warm"]},
+      {text:"Big-city explorer", tags:["city","food"]}
+    ]
+  },
+
+  /* BUDGET #2 */
+
+  {
+    text: "If two destinations were equally exciting, what would break the tie?",
+    answers: [
+      {text:"The cheaper option", tags:["budget"]},
+      {text:"The better food", tags:["food"]},
+      {text:"The more interesting culture", tags:["culture","history"]},
+      {text:"The nicer hotel or resort", tags:["luxury","relaxed"]}
+    ]
+  },
+
+  {
+    text: "Finally, what do you want to say when you get home?",
+    answers: [
+      {text:"That was the most exciting trip ever.", tags:["adventure","city"]},
+      {text:"I can't believe how beautiful that was.", tags:["nature","beach"]},
+      {text:"I learned SO much.", tags:["culture","history"]},
+      {text:"I wish I could stay forever.", tags:["relaxed","luxury"]}
+    ]
+  }
+
+];
+
+
+/* =========================================
+   QUIZ ENGINE
+========================================= */
+
+let currentQuestion = 0;
+let selectedAnswer = null;
+let userAnswers = [];
+
+
+function startQuiz() {
+
+  document.getElementById("quiz").scrollIntoView({
+    behavior: "smooth"
+  });
+
+  setTimeout(() => {
+    renderQuestion();
+  }, 400);
+
+}
+
+
+function renderQuestion() {
+
+  const q = questions[currentQuestion];
+
+  document.getElementById("questionNumber").textContent =
+    `Question ${currentQuestion + 1}`;
+
+  document.getElementById("progressText").textContent =
+    `Question ${currentQuestion + 1} of ${questions.length}`;
+
+  const percent = Math.round(
+    ((currentQuestion + 1) / questions.length) * 100
+  );
+
+  document.getElementById("progressPercent").textContent =
+    `${percent}%`;
+
+  document.getElementById("progressFill").style.width =
+    `${percent}%`;
+
+  document.getElementById("question").textContent =
+    q.text;
+
+  const answers = document.getElementById("answers");
+
+  answers.innerHTML = "";
+
+  selectedAnswer = userAnswers[currentQuestion] ?? null;
+
+  q.answers.forEach((answer, index) => {
+
+    const button = document.createElement("button");
+
+    button.className = "answer";
+
+    button.textContent = answer.text;
+
+    if (selectedAnswer === index) {
+      button.classList.add("selected");
+    }
+
+    button.onclick = () => selectAnswer(index);
+
+    answers.appendChild(button);
+
+  });
+
+  document.getElementById("backBtn").disabled =
+    currentQuestion === 0;
+
+  document.getElementById("nextBtn").disabled =
+    selectedAnswer === null;
+
+  document.getElementById("nextBtn").textContent =
+    currentQuestion === questions.length - 1
+      ? "See My Results →"
+      : "Next →";
+
+  document.querySelector(".quiz-container").classList.remove("fade");
+
+  void document.querySelector(".quiz-container").offsetWidth;
+
+  document.querySelector(".quiz-container").classList.add("fade");
+}
+
+
+function selectAnswer(index) {
+
+  selectedAnswer = index;
+
+  userAnswers[currentQuestion] = index;
+
+  document.querySelectorAll(".answer").forEach((button, i) => {
+
+    button.classList.toggle(
+      "selected",
+      i === index
+    );
+
+  });
+
+  document.getElementById("nextBtn").disabled = false;
+}
+
+
+function nextQuestion() {
+
+  if (selectedAnswer === null) return;
+
+  if (currentQuestion < questions.length - 1) {
+
+    currentQuestion++;
+
+    renderQuestion();
+
+    window.scrollTo({
+      top: document.getElementById("quiz").offsetTop,
+      behavior: "smooth"
+    });
+
+  } else {
+
+    showResults();
+
+  }
+
+}
+
+
+function previousQuestion() {
+
+  if (currentQuestion > 0) {
+
+    currentQuestion--;
+
+    renderQuestion();
+
+  }
+
+}
+
+
+/* =========================================
+   SCORING
+========================================= */
+
+function calculateScores() {
+
+  const scores = {};
+
+  destinations.forEach(destination => {
+
+    scores[destination.name] = 0;
+
+  });
+
+
+  userAnswers.forEach((answerIndex, questionIndex) => {
+
+    if (answerIndex === undefined) return;
+
+    const answer =
+      questions[questionIndex].answers[answerIndex];
+
+    if (!answer) return;
+
+
+    destinations.forEach(destination => {
+
+      let points = 0;
+
+      answer.tags.forEach(tag => {
+
+        if (destination.tags.includes(tag)) {
+
+          points += 3;
+
+        }
+
+      });
+
+
+      /*
+        Small bonus for destinations matching
+        multiple parts of an answer.
+      */
+
+      const matchingTags =
+        answer.tags.filter(tag =>
+          destination.tags.includes(tag)
+        ).length;
+
+      if (matchingTags >= 2) {
+        points += 1;
+      }
+
+
+      scores[destination.name] += points;
+
+    });
+
+  });
+
+
+  /*
+    Add tiny random tie-breaker only.
+    This DOES NOT determine the winner.
+  */
+
+  destinations.forEach(destination => {
+
+    scores[destination.name] +=
+      Math.random() * 0.01;
+
+  });
+
+
+  return scores;
+}
+
+
+/* =========================================
+   RESULTS
+========================================= */
+
+function showResults() {
+
+  const scores = calculateScores();
+
+  const ranked = [...destinations].sort(
+    (a, b) =>
+      scores[b.name] - scores[a.name]
+  );
+
+
+  const winner = ranked[0];
+
+  const runnersUp = ranked.slice(1, 4);
+
+
+  document.getElementById("winnerImage").src =
+    winner.image;
+
+  document.getElementById("winnerImage").alt =
+    winner.name;
+
+  document.getElementById("winnerName").textContent =
+    winner.name;
+
+  document.getElementById("winnerDescription").textContent =
+    winner.description;
+
+
+  const runnerGrid =
+    document.getElementById("runnerGrid");
+
+  runnerGrid.innerHTML = "";
+
+
+  runnersUp.forEach(destination => {
+
+    const card = document.createElement("div");
+
+    card.className = "runner";
+
+    card.innerHTML = `
+      <img
+        src="${destination.image}"
+        alt="${destination.name}"
+      >
+      <h3>${destination.name}</h3>
+    `;
+
+    runnerGrid.appendChild(card);
+
+  });
+
+
+  document.getElementById("quiz").style.display =
+    "none";
+
+  document.getElementById("results").style.display =
+    "block";
+
+  window.scrollTo({
+    top: document.getElementById("results").offsetTop,
+    behavior: "smooth"
+  });
+
+}
+
+
+/* =========================================
+   RESTART
+========================================= */
+
+function restartQuiz() {
+
+  currentQuestion = 0;
+  selectedAnswer = null;
+  userAnswers = [];
+
+  document.getElementById("results").style.display =
+    "none";
+
+  document.getElementById("quiz").style.display =
+    "block";
+
+  renderQuestion();
+
+  window.scrollTo({
+    top: document.getElementById("quiz").offsetTop,
+    behavior: "smooth"
+  });
+
+}
+
+</script>
+
+</body>
+</html>
